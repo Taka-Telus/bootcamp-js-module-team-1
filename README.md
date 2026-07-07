@@ -71,15 +71,17 @@ To explore the API visually, download [Bruno](https://www.usebruno.com/) and imp
 ## Structure
 
 ```
-proyecto-final/
+quiz/
   index.html    ← HTML shell (single page, 6 screens)
   styles.css    ← styles (you create this)
   app.js        ← main logic (you create this)
   api/          ← API documentation
+bruno/          ← Add bruno test playground when needed
+docs/           ← Add project documentation
 ```
 
 ---
 
 ## Acceptance Criteria
 
-See [`proyecto-final/CRITERIOS.md`](proyecto-final/CRITERIOS.md) for the full list.
+See [`TP modulo JS`](https://telusinternational.enterprise.slack.com/docs/T0B532ZNW/F0BGB40H788) for the full list.
