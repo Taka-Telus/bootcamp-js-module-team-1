@@ -8,14 +8,15 @@
         if(nombre){
             saludo.textContent = `¡Hola, ${nombre}!`;
             inputNombre.value = nombre;
+            inputNombre.disabled = true;
         }
     btnGuardar.addEventListener("click", () => {
         localStorage.setItem("nombre", inputNombre.value);
-    });
-    
-    btnBorrar.addEventListener("click", () => {
-        localStorage.removeItem("nombre");
-        saludo.textContent = "Ingresá tu nombre.";
+        inputNombre.disabled = true ;
     });
 
-  //  btnEditar.addEventListener("click",()=>{});
+
+    btnEditar.addEventListener("click",()=>{
+         inputNombre.disabled = false;
+         inputNombre.focus();
+   });

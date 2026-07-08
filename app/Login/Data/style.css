@@ -10,27 +10,62 @@
     }
     .tarjeta{
         width:450px;
-        height:250px;
+        height:350px;
         background-color:#ffff;
         position: relative;
         right:20px;
         border-radius: 10px;
         box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
-
+    }
+    h1{
+      margin-left:70px;
+      padding-top:40px;
+    }
+    p{
+      color: #626262;
+      text-align: center;
 
     }
+    .logo{
+      width:50px;
+      height:50px;
+      position:relative;
+      left:190px;
+      top:40px;
+    }
+
     input {
-      padding: 8px;
+      padding: 8px ;
       font-size: 1rem;
       width: 200px;
-      margin-left:10px;
+      margin-left:25%;
+      margin-top:50px;
     }
-    button {
+  
+      .btn-guardar {
       padding: 8px 16px;
+      width:220px;
       font-size: 1rem;
       cursor: pointer;
-      margin-left: 8px;
+      margin-left:25%;
+      margin-top:5px;
+      background-color:#0d791b;
+      color:#ffff;
+      border-radius:10px;
+      display:flex;
+      flex-direction: column;
+
     }
+    .btn-editar{
+      position:relative;
+      left:300px;
+      bottom:75px;
+    }
+    .editar{
+      width:10px;
+      height:10px;
+    }
+    
     #saludo {
       margin-top: 24px;
       font-size: 1.2rem;
