@@ -49,6 +49,7 @@
     if (event.target.classList.contains("botonJugar")) {
         const idJuego = event.target.dataset.id;
         const urlPreguntas = `${url}/${idJuego}`;
+        localStorage.setItem("pregunta",urlPreguntas)
         
         const respuesta = await fetch(urlPreguntas);
         const preguntas = await respuesta.json();
