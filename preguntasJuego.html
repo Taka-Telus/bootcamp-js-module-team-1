@@ -32,26 +32,40 @@
     const avanzarPregunta=document.getElementById("siguiente-pregunta")
     let preguntas_lista = [];
     let preguntaActual=0;
+    let opciones =[`A`,`B`,`C`,`D`];
 
     avanzarPregunta.addEventListener("click",async () =>{
-        preguntaActual++
-        mostrarPregunta()
+        preguntaActual++;
+        mostrarPregunta();
 
     })
 
     function mostrarPregunta() {
-        const pregunta = preguntas_lista[preguntaActual];
         
-        preguntaPrincipal.textContent = pregunta.text;
-        
-        opcionesDePregunta.innerHTML = "";
-        
-        pregunta.options.forEach(opcion => {
-            const li = document.createElement("li");
-            li.textContent = opcion;
-            opcionesDePregunta.appendChild(li);
+        if(preguntaActual < preguntas_lista.length -1 ){
+            const pregunta = preguntas_lista[preguntaActual];
+            
+            preguntaPrincipal.textContent = pregunta.text;
+            
+            opcionesDePregunta.innerHTML = "";
+            
+            pregunta.options.forEach(opcion => {
+                
+                const li = document.createElement("li");
+
+                li.innerHTML=`
+                <button = "opciones" data-id="${opcion.id}">${opcion} </button>
+                `
+                opcionesDePregunta.appendChild(li);
         });
+        }
+        else{
+            preguntaPrincipal.textContent = "Fin de preguntas";
+            opcionesDePregunta.innerHTML = "";
+            preguntaActual = 0
+        }
     }
+    opcionesDePregunta.addEventListener("click")
     
     async function cargarCuestionario() {
             const respuesta = await fetch(preguntaElegida);
