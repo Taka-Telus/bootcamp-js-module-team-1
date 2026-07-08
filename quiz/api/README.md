@@ -2,7 +2,7 @@
 
 **Base URL:** `https://quiz-api.cesar-kastli.workers.dev/`
  
-To explore the endpoints with a visual interface, download [Bruno](https://www.usebruno.com/) and import `quiz-api-bruno.tar.gz` from this folder. Select **Production** in the Environment dropdown.
+To  explore the endpoints with a visual interface, download [Bruno](https://www.usebruno.com/) and import `quiz-api-bruno.tar.gz` from this folder. Select **Production** in the Environment dropdown.
 
 ---
 
