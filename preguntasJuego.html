@@ -12,7 +12,7 @@
     <div class="contenedor-de-preguntas-y-opciones">
         <h1 class="preguntaPrincipal" id="pregunta"> Hola</h1>
     
-        <ul id="opcionesDePregunta"></ul>
+        <ul class ="listaDeOpciones" id="opcionesDePregunta"></ul>
 
         <button id="siguiente-pregunta">Siguiente Pregunta</button>
 
@@ -34,48 +34,76 @@
     let preguntaActual=0;
     let opciones =[`A`,`B`,`C`,`D`];
 
-    avanzarPregunta.addEventListener("click",async () =>{
-        preguntaActual++;
-        mostrarPregunta();
 
-    })
 
     function mostrarPregunta() {
-        
-        if(preguntaActual < preguntas_lista.length -1 ){
+        if(preguntaActual < preguntas_lista.length  ){
             const pregunta = preguntas_lista[preguntaActual];
             
             preguntaPrincipal.textContent = pregunta.text;
             
             opcionesDePregunta.innerHTML = "";
             
-            pregunta.options.forEach(opcion => {
+            pregunta.options.forEach((opcion,index ) => {
                 
                 const li = document.createElement("li");
 
                 li.innerHTML=`
-                <button = "opciones" data-id="${opcion.id}">${opcion} </button>
+                <button class="botonOpcion" data-id="${index}">${opcion} </button>
                 `
                 opcionesDePregunta.appendChild(li);
         });
-        }
+        preguntaActual++
+    }
         else{
             preguntaPrincipal.textContent = "Fin de preguntas";
             opcionesDePregunta.innerHTML = "";
             preguntaActual = 0
+            console.log('else',preguntaActual)
         }
     }
-    opcionesDePregunta.addEventListener("click")
     
     async function cargarCuestionario() {
             const respuesta = await fetch(preguntaElegida);
             const datos = await respuesta.json();
-            
             preguntas_lista = datos.questions;
-            
             mostrarPregunta();
-        
     }
+    
+    
+    avanzarPregunta.addEventListener("click",async () =>{
+        mostrarPregunta();
+    })
+    
+    
+    
+    opcionesDePregunta.addEventListener("click",(event)=>{
+        
+        if (!event.target.classList.contains("botonOpcion")) return;
+        
+
+        
+        if (event.target.dataset.id ==0) {
+            
+        console.log("BIEN HECHO");
+        event.target.classList.add("opcion-correcta");
+        const elementosInternos = document.querySelectorAll('button.botonOpcion');
+        elementosInternos.forEach(boton => boton.disabled = true);
+
+
+        }else{
+            console.log("MAL");
+            event.target.classList.add("opcion-incorrecta")
+            const correcta = opcionesDePregunta.querySelector('[data-id="0"]');
+            if (correcta) {
+                correcta.classList.add("opcion-correcta");
+                const elementosInternos = document.querySelectorAll('button.botonOpcion');
+                elementosInternos.forEach(boton => boton.disabled = true);
+
+                
+            }
+        }
+    })
 
 
 
