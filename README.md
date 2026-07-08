@@ -86,3 +86,4 @@ docs/           ← Add project documentation
 
 See [`TP modulo JS`](https://telusinternational.enterprise.slack.com/docs/T0B532ZNW/F0BGB40H788) for the full list.
 test
+test
