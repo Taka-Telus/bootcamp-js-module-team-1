@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas</title>
+    <link rel="stylesheet" href="preguntas.css">
+</head>
+<body>
+    
+    
+    <div class="contenedor-de-preguntas-y-opciones">
+        <h1 class="preguntaPrincipal" id="pregunta"> Hola</h1>
+    
+        <ul id="opcionesDePregunta"></ul>
+
+        <button id="siguiente-pregunta">Siguiente Pregunta</button>
+
+    </div>
+    
+    
+
+
+
+
+
+    
+<script>
+    const preguntaPrincipal=document.getElementById("pregunta")
+    const opcionesDePregunta=document.getElementById("opcionesDePregunta")
+    const preguntaElegida=localStorage.getItem("pregunta")
+    const avanzarPregunta=document.getElementById("siguiente-pregunta")
+    let preguntas_lista = [];
+    let preguntaActual=0;
+
+    avanzarPregunta.addEventListener("click",async () =>{
+        preguntaActual++
+        mostrarPregunta()
+
+    })
+
+    function mostrarPregunta() {
+        const pregunta = preguntas_lista[preguntaActual];
+        
+        preguntaPrincipal.textContent = pregunta.text;
+        
+        opcionesDePregunta.innerHTML = "";
+        
+        pregunta.options.forEach(opcion => {
+            const li = document.createElement("li");
+            li.textContent = opcion;
+            opcionesDePregunta.appendChild(li);
+        });
+    }
+    
+    async function cargarCuestionario() {
+            const respuesta = await fetch(preguntaElegida);
+            const datos = await respuesta.json();
+            
+            preguntas_lista = datos.questions;
+            
+            mostrarPregunta();
+        
+    }
+
+
+
+
+cargarCuestionario();
+
+</script>
+</body>
+</html>
