@@ -13,8 +13,10 @@
     btnGuardar.addEventListener("click", () => {
         localStorage.setItem("nombre", inputNombre.value);
         inputNombre.disabled = true ;
-    });
 
+        window.location.href= "PantallaP.html";
+    });
+  
 
     btnEditar.addEventListener("click",()=>{
          inputNombre.disabled = false;
