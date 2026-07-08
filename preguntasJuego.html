@@ -14,17 +14,11 @@
     
         <ul class ="listaDeOpciones" id="opcionesDePregunta"></ul>
 
-        <button id="siguiente-pregunta">Siguiente Pregunta</button>
+        <button id="siguiente-pregunta" >Siguiente Pregunta</button>
 
     </div>
     
-    
-
-
-
-
-
-    
+        
 <script>
     const preguntaPrincipal=document.getElementById("pregunta")
     const opcionesDePregunta=document.getElementById("opcionesDePregunta")
@@ -36,9 +30,12 @@
 
 
 
+
     function mostrarPregunta() {
         if(preguntaActual < preguntas_lista.length  ){
             const pregunta = preguntas_lista[preguntaActual];
+            avanzarPregunta.dis
+            console.log(avanzarPregunta.setAttribute("disabled",true))
             
             preguntaPrincipal.textContent = pregunta.text;
             
@@ -89,6 +86,8 @@
         event.target.classList.add("opcion-correcta");
         const elementosInternos = document.querySelectorAll('button.botonOpcion');
         elementosInternos.forEach(boton => boton.disabled = true);
+                    avanzarPregunta.disabled = false; 
+
 
 
         }else{
@@ -99,9 +98,13 @@
                 correcta.classList.add("opcion-correcta");
                 const elementosInternos = document.querySelectorAll('button.botonOpcion');
                 elementosInternos.forEach(boton => boton.disabled = true);
+                            avanzarPregunta.disabled = false; 
+
+
 
                 
             }
+
         }
     })
 
