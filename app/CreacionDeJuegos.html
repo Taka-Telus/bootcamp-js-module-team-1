@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CreacionDejuegos.css">
+</head>
+<body>
+
+
+<div>
+    <button id="botonCrearPregunta">CREAR NUEVA PREGUNTA</button>
+    <button id="botonGuardarPregunta">GUARDAR PREGUNTAS</button>
+
+</div>
+
+
+<div id="contenedorGeneral" class="contenedorGeneral">
+    
+    <div id="informacionBasica" class="informacionBasica">
+
+        <h4>Tituto del juego</h4>
+        <input class="inputTitulo" id="inputTitulo" type="text">
+        
+        <h4>autor</h4>
+        <input class="inputCreador" id ="inputCreador" type="text">
+    
+        <label for="dificultad">Elige la dificultad:</label>
+        <select id="dificultad">
+            <option value="facil">Fácil</option>
+            <option value="normal" selected>Normal</option>
+            <option value="dificil">Difícil</option>
+        </select>
+    </div>
+    
+    
+    
+    <div id="contenedorDepreguntasYOpciones" class="contenedorDePreguntasYOpciones">
+    <input type="text" class="inputPregunta" placeholder="Ingrese una pregunta ">
+    <button class="btn-borrar">BORRAR PREGUNTA</button>
+        
+    <div>
+        <div>
+            <input type="text"  class="inputOpcion" placeholder="Respuesta correcta...">
+
+            
+            <input type="text"  class="inputOpcion"placeholder="Incorrecta uno...">
+
+        </div>
+        <div>
+            <input type="text"  class="inputOpcion" placeholder="Incorrecta dos...">
+
+                    
+            <input type="text"  class="inputOpcion" placeholder="Incorrecta tres...">
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<script>
+    const crearPregunta=document.getElementById("botonCrearPregunta");
+    const contenedorPrincipal=document.getElementById("contenedorDePreguntasYOpciones");
+    const contenedorGeneral=document.getElementById("contenedorGeneral");
+    const botonGuardar=document.getElementById("botonGuardarPregunta");
+    const seleccion = document.getElementById('dificultad')
+    const titulo = document.getElementById('inputTitulo')
+    const creador = document.getElementById('inputCreador')
+    const image="https://ar.pinterest.com/pin/1008032329065462679/"
+
+    crearPregunta.addEventListener("click",()=>{
+        const pregunta=document.createElement("div")
+        pregunta.classList.add("contenedorDePreguntasYOpciones");
+
+        pregunta.innerHTML=` 
+        
+        <input type="text" class="inputPregunta" placeholder="Ingrese una pregunta ">
+        <button class="btn-borrar">BORRAR PREGUNTA</button>
+
+        <div>
+            <div>
+                <input type="text"  class="inputOpcion" placeholder="Respuesta correcta...">
+
+                
+                <input type="text" class="inputOpcion" placeholder="Incorrecta uno...">
+
+            </div>
+            <div>
+                <input type="text"  class="inputOpcion" placeholder="Incorrecta dos...">
+
+                        
+                <input type="text"  class="inputOpcion" placeholder="Incorrecta tres...">
+
+
+            </div>
+        </div>
+        
+        `
+        contenedorGeneral.appendChild(pregunta);
+    })
+    contenedorGeneral.addEventListener("click", (e) => {
+        if (e.target.classList.contains("btn-borrar")) {
+            const preguntaAELiminar = e.target.closest(".contenedorDePreguntasYOpciones");
+            preguntaAELiminar.remove();
+        }
+    });
+
+    botonGuardar.addEventListener("click", () => {
+        const cuestionario = [];
+        
+        const bloquesPreguntas = document.querySelectorAll(".contenedorDePreguntasYOpciones");
+        const tituloJuego=titulo.value;
+        const dificultadJuego=seleccion.value;
+        const idJuego = crypto.randomUUID();
+        const creadorDeJuego = creador.value
+        const questions = [];
+
+        
+        bloquesPreguntas.forEach((bloque) => {
+            const textoPregunta = bloque.querySelector(".inputPregunta").value;
+            const inputsOpciones = bloque.querySelectorAll(".inputOpcion");
+            const checksCorrectas = bloque.querySelectorAll(".checkCorrecta");
+            const idPregunta=crypto.randomUUID();
+            
+            const opciones = [];
+            inputsOpciones.forEach((input) => {
+                opciones.push(input.value,
+                );
+            });
+
+            questions.push({
+            id: idPregunta,
+            text: textoPregunta,
+            options: opciones
+            });
+        })
+            const payload = {
+            id: idJuego,
+            title: tituloJuego,
+            author: creadorDeJuego,
+            image: image,
+            questions: questions,
+            difficulty: dificultadJuego
+        };
+            localStorage.setItem("misPreguntasGuardadas", JSON.stringify(payload));
+            console.log(payload)
+
+            fetch("https://quiz-api.cesar-kastli.workers.dev/games/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+                
+            });
+            console.log(payload)
+        });
+
+
+
+</script>
+</body>
+</html>

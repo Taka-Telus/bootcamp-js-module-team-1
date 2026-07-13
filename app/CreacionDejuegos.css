@@ -1,0 +1,31 @@
+
+
+.contenedorDePreguntasYOpciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contenedorOpciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contenedorGeneral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.informacionBasica {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
