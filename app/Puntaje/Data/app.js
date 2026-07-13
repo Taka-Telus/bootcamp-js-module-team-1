@@ -1,7 +1,11 @@
 
+const gameId = localStorage.getItem("idJuego");
 const url = `https://quiz-api.cesar-kastli.workers.dev/games/${gameId}/scores`
 
 const scoreboard = document.getElementById("scoreboard");
+const btn_reiniciar = document.getElementById("reinicio");
+const btn_inicio = document.getElementById("inicio");
+
 
 async function mostrarScoreboard(){
     try{
