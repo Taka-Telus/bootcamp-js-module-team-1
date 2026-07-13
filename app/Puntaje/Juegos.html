@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="cargarListaDeJuegos">Cargar Lista de Juegos</button>
+    <ul id="fichaDeJuego" class="lista-fichaDejuegos"></ul>
+
+<script>
+    const fichaDeJuegos = document.getElementById("fichaDeJuego")
+    const boton = document.getElementById("cargarListaDeJuegos")
+    const url = `https://quiz-api.cesar-kastli.workers.dev/games`
+    const botonJugar=document.getElementById("botonJugar")
+    
+    boton.addEventListener("click",async()=>{
+        const respuesta = await fetch(url);
+        const juegos = await respuesta.json();
+        
+        fichaDeJuegos.innerHTML = ""; 
+        juegos.forEach((juego) => {
+            const li = document.createElement("li")
+            li.className="Juego"
+            li.innerHTML = `
+            
+            <div class ="contenedor-fichaDejuegos">
+                <div class = "contenedor-fichaDeJuegosImagen">
+                    <img src="${juego.image}" class="fichaDejuegosImagenes"/>
+                </div>
+                <div> 
+                    <h3>${juego.title}</h3>
+
+                    <p> ${juego.questionCount ?? "—"} Questions · Level : Hard</p>
+                </div>
+                
+                <div>
+                    <button class="botonJugar" data-id="${juego.id}">Jugar</button>
+                    <button class="botonEditar" data-id="${juego.id}">Editar</button>
+                </div>
+            </div>
+            `
+            fichaDeJuegos.appendChild(li);
+        })
+    })
+    fichaDeJuegos.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("botonJugar")) {
+        const idJuego = event.target.dataset.id;
+        
+        localStorage.setItem("idJuego",idJuego )
+        window.location.href = "Scoreboard.html"
+        const urlPreguntas = `${url}/${idJuego}`;
+        localStorage.setItem("pregunta",urlPreguntas)
+        
+        const respuesta = await fetch(urlPreguntas);
+        const preguntas = await respuesta.json();
+        preguntas.questions.forEach((pregunta)=>{
+            console.log(pregunta.text)
+            console.log(pregunta.options)
+
+
+
+        })
+    }
+})
+
+
+    
+</script>
+</body>
+</html>

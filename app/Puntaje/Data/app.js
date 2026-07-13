@@ -1,3 +1,5 @@
+const gameId = localStorage.getItem("idJuego")
+
 
 const url = `https://quiz-api.cesar-kastli.workers.dev/games/${gameId}/scores`
 
