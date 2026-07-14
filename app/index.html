@@ -62,6 +62,24 @@
     }
 })
 
+    fichaDeJuegos.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("botonEditar")) {
+        const idJuego = event.target.dataset.id;
+        const urlPreguntas = `${url}/${idJuego}`;
+        localStorage.setItem("pregunta",urlPreguntas)
+        
+        const respuesta = await fetch(urlPreguntas);
+        const preguntas = await respuesta.json();
+        
+        preguntas.questions.forEach((pregunta)=>{
+            console.log("1")
+
+
+
+        })
+    }
+})
+
 jugar()
 
 
