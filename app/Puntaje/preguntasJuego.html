@@ -22,11 +22,12 @@
 <script>
     const preguntaPrincipal=document.getElementById("pregunta")
     const opcionesDePregunta=document.getElementById("opcionesDePregunta")
-    const preguntaElegida=localStorage.getItem("pregunta")
+    const urlJuegoElegido=localStorage.getItem("pregunta")
     const avanzarPregunta=document.getElementById("siguiente-pregunta")
     let preguntas_lista = [];
     let preguntaActual=0;
     let opciones =[`A`,`B`,`C`,`D`];
+    let puntaje = 0;
 
 
 
@@ -55,13 +56,17 @@
         else{
             preguntaPrincipal.textContent = "Fin de preguntas";
             opcionesDePregunta.innerHTML = "";
-            avanzarPregunta.textContent="Gracias por jugar "
+            avanzarPregunta.textContent="Ver puntaje"
+            window.location.href="Scoreboard.html"
             preguntaActual = 0
+
+            localStorage.setItem("puntajeFinal", puntaje);
+            puntaje = 0 ;
         }
     }
     
     async function cargarCuestionario() {
-            const respuesta = await fetch(preguntaElegida);
+            const respuesta = await fetch(urlJuegoElegido);
             const datos = await respuesta.json();
             preguntas_lista = datos.questions;
             mostrarPregunta();
@@ -83,6 +88,8 @@
         if (event.target.dataset.id ==0) {
             
         console.log("BIEN HECHO");
+            puntaje++;
+            console.log(puntaje)
         event.target.classList.add("opcion-correcta");
         const elementosInternos = document.querySelectorAll('button.botonOpcion');
         elementosInternos.forEach(boton => boton.disabled = true);
@@ -92,6 +99,8 @@
 
         }else{
             console.log("MAL");
+            puntaje--
+            console.log(puntaje)
             event.target.classList.add("opcion-incorrecta")
             const correcta = opcionesDePregunta.querySelector('[data-id="0"]');
             if (correcta) {

@@ -1,12 +1,18 @@
-const gameId = localStorage.getItem("idJuego")
+const gameId = localStorage.getItem("idJuego");
+const puntajeFinal = localStorage.getItem("puntajeFinal");
+const user = localStorage.getItem("")
 
 
 const url = `https://quiz-api.cesar-kastli.workers.dev/games/${gameId}/scores`
 
 const scoreboard = document.getElementById("scoreboard");
 
+async function enviarPuntaje(){
+
+}
+
 async function mostrarScoreboard(){
-    try{
+
     const respuesta = await fetch(url);
 
     if(!respuesta.ok){
@@ -28,5 +34,5 @@ async function mostrarScoreboard(){
     } catch(error){
         console.log(error);
     }
-}
+
 mostrarScoreboard();

@@ -1,0 +1,20 @@
+meta {
+  name: Ver scoreboard
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/games/{{gameId}}/scores
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+  res.body[0].playerName: eq Ana
+  res.body[0].score: eq 10
+  res.body[1].playerName: eq César
+  res.body[1].score: eq 8
+}

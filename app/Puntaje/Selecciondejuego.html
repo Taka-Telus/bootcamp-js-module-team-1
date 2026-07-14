@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="cargarListaDeJuegos">Cargar Lista de Juegos</button>
     <ul id="fichaDeJuego" class="lista-fichaDejuegos"></ul>
 
 <script>
@@ -16,11 +15,11 @@
     const url = `https://quiz-api.cesar-kastli.workers.dev/games`
     const botonJugar=document.getElementById("botonJugar")
     
-    boton.addEventListener("click",async()=>{
+    async function jugar (){
         const respuesta = await fetch(url);
         const juegos = await respuesta.json();
         
-        fichaDeJuegos.innerHTML = ""; 
+        fichaDeJuegos.innerHTML = "";
         juegos.forEach((juego) => {
             const li = document.createElement("li")
             li.className="Juego"
@@ -44,13 +43,12 @@
             `
             fichaDeJuegos.appendChild(li);
         })
-    })
+    }
     fichaDeJuegos.addEventListener("click", async (event) => {
     if (event.target.classList.contains("botonJugar")) {
         const idJuego = event.target.dataset.id;
-        
-        localStorage.setItem("idJuego",idJuego )
-        window.location.href = "Scoreboard.html"
+        window.location.href ="preguntasJuego.html"
+        localStorage.setItem(idJuego);
         const urlPreguntas = `${url}/${idJuego}`;
         localStorage.setItem("pregunta",urlPreguntas)
         
@@ -60,11 +58,13 @@
             console.log(pregunta.text)
             console.log(pregunta.options)
 
-
+        
 
         })
     }
 })
+
+jugar()
 
 
     

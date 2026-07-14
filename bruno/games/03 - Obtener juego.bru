@@ -1,0 +1,20 @@
+meta {
+  name: Obtener juego
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/games/{{gameId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  gameId: 4522a58a-1a6d-4cdc-b67d-a66e6890e5fd
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{gameId}}
+}
