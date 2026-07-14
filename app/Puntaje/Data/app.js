@@ -22,12 +22,10 @@ async function enviarPuntaje(){
                 score: Number(puntajeFinal)
             })
         });
-
-        if(!respuesta.ok){
-            const detalleError = await respuesta.json().catch(() => null);
-            console.log("Detalle del error:", detalleError);
-            throw new Error("Error al guardar el puntaje");
-        }
+       
+if (!respuesta.ok) {
+    throw new Error("Error para obtener el dato");
+}
 
     } catch(error){
         console.log(error);
@@ -36,16 +34,10 @@ async function enviarPuntaje(){
 async function mostrarScoreboard(){
 try{
     const respuesta = await fetch(url);
-    method: "POST"
-    headers: { "Content-Type", "application/json" }
-    body: JSON.stringify({   "playerName": "César", "score": 8,
-            "playerName": "Ana", "score": 10
-    })
-
     if(!respuesta.ok){
         throw new Error("Error para obtener el dato");
     }
-
+    
     const datos = await respuesta.json()
     console.log(datos);
     scoreboard.innerHTML= "";
@@ -62,7 +54,19 @@ try{
         console.log(error);
     }
 }
-
+// seed.js - correr esto aparte en la consola del navegador o como script suelto, NO dentro del flujo normal
+async function seedDatos(){
+    await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ playerName: "César", score: 8 })
+    });
+    await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ playerName: "Ana", score: 10 })
+    });
+}
 mostrarScoreboard();
 async function iniciar(){
     if(puntajeFinal !== null && user){
