@@ -5,7 +5,7 @@ let preguntas_editadas = [];
 function eliminarPregunta(index) {
     preguntas_lista.splice(index, 1);
     preguntas_editadas.splice(index, 1);
-    renderizarPreguntas(); 
+    renderizarPreguntas();
 }
 
 function editarPregunta(index) {
@@ -28,13 +28,35 @@ function confirmarPregunta(index) {
     });
     
     preguntas_editadas[index].editando = false;
-    
-    
-    renderizarPreguntas();
-    console.log("Preguntas editadas:", preguntas_editadas);
-    console.log("Preguntas originales:", preguntas_lista);
 
-}
+
+
+    const juegoElegido = localStorage.getItem("pregunta");
+    
+    const questionsLimpias = preguntas_editadas.map((pregunta) => ({
+    id: pregunta.id,
+    text: pregunta.text,
+    options: pregunta.options
+    }));
+
+    const payload = {
+        questions: questionsLimpias
+    };
+
+    renderizarPreguntas();
+    
+    fetch(juegoElegido, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+                
+            });
+            console.log(payload)
+            console.log("holaas")
+        };
+
 
 function renderizarPreguntas() {
     contenedorPrincipal.innerHTML = "";
