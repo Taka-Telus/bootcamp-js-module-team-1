@@ -25,12 +25,14 @@ async function enviarPuntaje(){
        
 if (!respuesta.ok) {
     throw new Error("Error para obtener el dato");
-}
+    }
+    localStorage.removeItem("puntajeFinal");
 
     } catch(error){
         console.log(error);
+         }
     }
-}
+ 
 async function mostrarScoreboard(){
 try{
     const respuesta = await fetch(url);
@@ -54,8 +56,7 @@ try{
         console.log(error);
     }
 }
-// seed.js - correr esto aparte en la consola del navegador o como script suelto, NO dentro del flujo normal
-async function seedDatos(){
+async function otrosJugadores(){
     await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,6 +68,7 @@ async function seedDatos(){
         body: JSON.stringify({ playerName: "Ana", score: 10 })
     });
 }
+otrosJugadores();
 mostrarScoreboard();
 async function iniciar(){
     if(puntajeFinal !== null && user){
