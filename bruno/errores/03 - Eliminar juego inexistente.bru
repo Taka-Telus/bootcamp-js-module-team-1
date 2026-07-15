@@ -1,0 +1,15 @@
+meta {
+  name: Eliminar juego inexistente
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{baseUrl}}/games/no-existe
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+}

@@ -1,0 +1,36 @@
+meta {
+  name: Agregar primera pregunta
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/games/{{gameId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "questions": [
+      {
+        "text": "¿Quién ganó el Mundial 2022?",
+        "options": ["Argentina", "Francia", "Brasil", "Croacia"]
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.questions: length 1
+  res.body.questions[0].id: isDefined
+}
+
+script:post-response {
+  bru.setVar("questionId1", res.body.questions[0].id);
+}
