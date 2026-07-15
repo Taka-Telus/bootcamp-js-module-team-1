@@ -13,7 +13,7 @@
     btnGuardar.addEventListener("click", () => {
         localStorage.setItem("nombre", inputNombre.value);
         inputNombre.disabled = true ;
-        window.location.href ="../Puntaje/Selecciondejuego.html"
+        window.location.href ="../PantallaPrin/Selecciondejuego.html"
     });
 
 
