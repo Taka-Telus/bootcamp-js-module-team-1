@@ -1,0 +1,26 @@
+meta {
+  name: Preguntas con formato inválido
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/games/{{gameId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "questions": "esto debería ser un array"
+  }
+}
+
+assert {
+  res.status: eq 400
+  res.body.error: isDefined
+}
