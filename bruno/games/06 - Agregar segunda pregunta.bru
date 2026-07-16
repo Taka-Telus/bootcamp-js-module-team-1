@@ -1,0 +1,40 @@
+meta {
+  name: Agregar segunda pregunta
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/games/{{gameId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "questions": [
+      {
+        "id": "{{questionId1}}",
+        "text": "¿Quién ganó el Mundial 2022?",
+        "options": ["Argentina", "Francia", "Brasil", "Croacia"]
+      },
+      {
+        "text": "¿En qué países se juega el Mundial 2026?",
+        "options": ["Estados Unidos, Canadá y México", "Qatar", "Rusia", "Brasil"]
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.questions: length 2
+}
+
+script:post-response {
+  bru.setVar("questionId2", res.body.questions[1].id);
+}
