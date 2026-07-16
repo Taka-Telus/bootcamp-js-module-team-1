@@ -1,45 +1,70 @@
 const contenedorPrincipal = document.getElementById("contenedorPrincipal");
-let preguntas_lista = [];
 let preguntas_editadas = [];
 
-let datosJuego={
+let datosJuego = {
     title: "",
     difficulty: "",
-    image:"",
-    editandoInformacionBasica:false
-
+    image: "",
+    editandoInformacionBasica: false
 }
 
 async function cargarPreguntas() {
-    const juegoElegido = localStorage.getItem("pregunta");
-    const respuesta = await fetch(juegoElegido);
-    const datos = await respuesta.json();
-    
-    preguntas_lista = datos.questions.map((q, index) => ({ ...q, editando: false ,  }));
-    
-    preguntas_editadas = datos.questions.map((q, index) => ({ ...q, editando: false }));
+    try {
+        const juegoElegido = localStorage.getItem("pregunta");
 
-    const titulo = document.createElement("h2");
-    const dificultad = document.createElement("p");
+        if (!juegoElegido) {
+            throw new Error("No hay juego seleccionado");
+        }
 
-    titulo.textContent = datos.title;
-    titulo.id="titulo"
-    dificultad.textContent = `Dificultad: ${datos.difficulty}`;
-    dificultad.id="dificultad"
+        const respuesta = await fetch(juegoElegido);
 
-    contenedorPrincipal.before(titulo);
-    contenedorPrincipal.before(dificultad);
+        if (!respuesta.ok) {
+            throw new Error(`Error del servidor: ${respuesta.status}`);
+        }
 
-    renderizarPreguntas();
+        const datos = await respuesta.json();
+
+        preguntas_editadas = (datos.questions || []).map((preguntas, index) => ({ ...preguntas, editando: false }));        
+        console.log(preguntas_editadas)
+
+        if (preguntas_editadas.length === 0) {
+            preguntas_editadas.push({
+                id: crypto.randomUUID(),
+                text: "",
+                options: ["", "", "", ""],
+                editando: true
+            });
+        }
+
+        datosJuego.title = datos.title || "";
+        datosJuego.difficulty = datos.difficulty || "";
+        datosJuego.image = datos.image || "";
+
+        const titulo = document.createElement("h2");
+        const dificultad = document.createElement("p");
+
+        titulo.textContent = datosJuego.title;
+        titulo.id = "titulo"
+        dificultad.textContent = `Dificultad: ${datosJuego.difficulty}`;
+        dificultad.id = "dificultad"
+
+        contenedorPrincipal.before(titulo);
+        contenedorPrincipal.before(dificultad);
+
+        renderizarPreguntas();
+
+    } catch (error) {
+        console.error("Error al cargar las preguntas:", error);
+        contenedorPrincipal.innerHTML = "<p>No se pudieron cargar las preguntas</p>";
+    }
 }
 
 function eliminarPregunta(index) {
-    preguntas_lista.splice(index, 1);
     preguntas_editadas.splice(index, 1);
     renderizarPreguntas();
 }
 
-function editarInformacionBasica(){
+function editarInformacionBasica() {
     datosJuego.editandoInformacionBasica = true;
     renderizarPreguntas();
 
@@ -52,7 +77,7 @@ function editarPregunta(index) {
 
 function agregarPregunta() {
     const nuevaPregunta = {
-        id:crypto.randomUUID(),
+        id: crypto.randomUUID(),
         text: "",
         options: ["", "", "", ""],
         editando: true
@@ -64,98 +89,142 @@ function agregarPregunta() {
 
 
 
-function confirmarPregunta(index) {
-    const input = document.getElementById(`input-pregunta-${index}`);
+async function confirmarPregunta(index) {
+    try {
+        const input = document.getElementById(`input-pregunta-${index}`);
 
-    if (input && input.value.trim() !== "") {
-        preguntas_editadas[index].text = input.value;
-    }
-    preguntas_editadas[index].options.forEach((opcion, opcionIndex) => {
-        const inputOpcion = document.getElementById(`input-opcion-${index}-${opcionIndex}`);
-        if (inputOpcion && inputOpcion.value.trim() !== "") {
-            preguntas_editadas[index].options[opcionIndex] = inputOpcion.value;
+        if (input && input.value.trim() !== "") {
+            preguntas_editadas[index].text = input.value;
         }
-    });
-    
-    preguntas_editadas[index].editando = false;
+        preguntas_editadas[index].options.forEach((opcion, opcionIndex) => {
+            const inputOpcion = document.getElementById(`input-opcion-${index}-${opcionIndex}`);
+            if (inputOpcion && inputOpcion.value.trim() !== "") {
+                preguntas_editadas[index].options[opcionIndex] = inputOpcion.value;
+            }
+        });
 
+        preguntas_editadas[index].editando = false;
 
+        const juegoElegido = localStorage.getItem("pregunta");
 
-    const juegoElegido = localStorage.getItem("pregunta");
-    
-    const questionsLimpias = preguntas_editadas.map((pregunta) => ({
-    id: pregunta.id,
-    text: pregunta.text,
-    options: pregunta.options
-    }));
+        if (!juegoElegido) {
+            throw new Error("No hay juego seleccionado");
+        }
 
-    const payload = {
-        questions: questionsLimpias
-    };
+        const questionsLimpias = preguntas_editadas.map((pregunta) => ({
+            id: pregunta.id,
+            text: pregunta.text,
+            options: pregunta.options
+        }));
 
-    renderizarPreguntas();
-    
-    fetch(juegoElegido, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-                
-            });
-            console.log(payload)
+        const payload = {
+            questions: questionsLimpias
         };
 
+        renderizarPreguntas();
+
+        const respuesta = await fetch(juegoElegido, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error del servidor: ${respuesta.status}`);
+        }
+
+    } catch (error) {
+        console.error("Error al confirmar la pregunta:", error);
+    }
+};
 
 
-function confirmarEdicionDeInformacionBasica() {
-    datosJuego.editandoInformacionBasica == false;
-    console.log(datosJuego.e)
 
-    const inputTitulo = document.getElementById("input-titulo");
-    const inputDificultad = document.getElementById("input-dificultad");
-    const inputImagen = document.getElementById("input-imagen");
+async function confirmarEdicionDeInformacionBasica() {
+    try {
+        datosJuego.editandoInformacionBasica = false;
 
-    const titulo = inputTitulo.value
-    const dificultad = inputDificultad.value
-    const imagen = inputImagen.value
+        const inputTitulo = document.getElementById("input-titulo");
+        const inputDificultad = document.getElementById("input-dificultad");
+        const inputImagen = document.getElementById("input-imagen");
 
-    const juegoElegido = localStorage.getItem("pregunta");
+        const titulo = inputTitulo.value;
+        const dificultad = inputDificultad.value;
+        const imagen = inputImagen.value;
 
-    const payload = {
-        title: titulo,
+        datosJuego.title = titulo;
+        datosJuego.difficulty = dificultad;
+        datosJuego.image = imagen;
 
-        image:imagen,
+        renderizarPreguntas();
 
-        difficulty:dificultad
-    };
+        const juegoElegido = localStorage.getItem("pregunta");
 
-    
-    fetch(juegoElegido, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-                
-            });
-            console.log(payload)
+        if (!juegoElegido) {
+            throw new Error("No hay juego seleccionado");
+        }
+
+        const payload = {
+            title: titulo,
+            image: imagen,
+            difficulty: dificultad
         };
 
+        const respuesta = await fetch(juegoElegido, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
 
+        if (!respuesta.ok) {
+            throw new Error(`Error del servidor: ${respuesta.status}`);
+        }
 
+    } catch (error) {
+        console.error("Error al confirmar la informacion basica:", error);
+    }
+};
 
+async function eliminarJuego() {
+    try {
+        const juegoElegido = localStorage.getItem("pregunta");
 
+        if (!juegoElegido) {
+            throw new Error("No hay juego seleccionado");
+        }
 
+        const confirmacion = confirm("¿Seguro que querés eliminar este juego? Esta acción no se puede deshacer.");
+        if (!confirmacion) return;
+
+        const respuesta = await fetch(juegoElegido, {
+            method: "DELETE"
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error del servidor: ${respuesta.status}`);
+        }
+
+        localStorage.removeItem("pregunta");
+        window.location.href = "../index/index.html";
+
+    } catch (error) {
+        console.error("Error al eliminar el juego:", error);
+        alert("No se pudo eliminar el juego");
+    }
+}
 
 function renderizarPreguntas() {
     contenedorPrincipal.innerHTML = "";
     const enEdicionInformacionBasica = datosJuego.editandoInformacionBasica
 
-        contenedorPrincipal.innerHTML = `
-                        <button onclick="agregarPregunta()">Agregar pregunta</button>
+    contenedorPrincipal.innerHTML = `
+        <button onclick="agregarPregunta()">Agregar pregunta</button>
+        <button onclick="eliminarJuego()">Eliminar juego</button>
 
-        
         ${enEdicionInformacionBasica
             ? `
                 <div>
@@ -179,21 +248,14 @@ function renderizarPreguntas() {
         <hr>
     `;
 
-    
 
     preguntas_editadas.forEach((pregunta, index) => {
         const preguntaDiv = document.createElement("div");
         preguntaDiv.classList.add("pregunta");
-        
+
         const enEdicion = pregunta.editando === true;
-        
-
-
-
 
         preguntaDiv.innerHTML = `
-            
-            
             <h3>Pregunta ${index + 1}</h3>
             ${enEdicion
                 ? `<input type="text" id="input-pregunta-${index}" value="${pregunta.text}" class="editando">`
@@ -203,14 +265,14 @@ function renderizarPreguntas() {
             ${enEdicion
                 ? `<button onclick="confirmarPregunta(${index})">Confirmar</button>`
                 : `<button onclick="editarPregunta(${index})">Editar</button>`
-            
+
             }
             <button onclick="eliminarPregunta(${index})">Eliminar</button>
             <ul>
                 ${pregunta.options.map((opcion, opcionIndex) => enEdicion
-                        ? `<li><input type="text" id="input-opcion-${index}-${opcionIndex}" value="${opcion}"></li>`
-                        : `<li>${opcion}</li>`)
-                        .join('')
+                ? `<li><input type="text" id="input-opcion-${index}-${opcionIndex}" value="${opcion}"></li>`
+                : `<li>${opcion}</li>`)
+                .join('')
             }
             </ul>
             `;
