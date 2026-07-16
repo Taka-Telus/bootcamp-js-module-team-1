@@ -11,22 +11,14 @@
             inputNombre.disabled = true;
         }
     btnGuardar.addEventListener("click", () => {
-        
-        if (inputNombre.value.trim() !== ""  ) {
-            localStorage.setItem("nombre", inputNombre.value);
-            inputNombre.disabled = true ;
-            window.location.href = "../index/index.html";
-            
-        }else{
-            alert("Ingrese caracteres en el nombre")
-            
-        }
-    
-    
+        localStorage.setItem("nombre", inputNombre.value);
+        inputNombre.disabled = true ;
+        window.location.href ="../PantallaPrin/Selecciondejuego.html"
     });
 
 
     btnEditar.addEventListener("click",()=>{
-        inputNombre.disabled = false;
-        inputNombre.focus();
-    });
+         inputNombre.disabled = false;
+         inputNombre.focus();
+   });
+   

@@ -10,6 +10,10 @@ delete {
   auth: none
 }
 
+vars:pre-request {
+  gameId: g1
+}
+
 assert {
   res.status: eq 204
 }

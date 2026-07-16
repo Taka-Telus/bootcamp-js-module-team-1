@@ -1,23 +1,143 @@
  body {
       font-family: sans-serif;
-      max-width: 400px;
+      max-width: 1000px;
       margin: 60px 60px;
       color:rgb(20, 138, 26);
       min-height: 100vh;
       width:300px;
-    }
-    
-    h1{
-      margin-left:70px;
-      padding-top:40px;
-    }
-    p{
-      color: #626262;
-      text-align: center;
+      display:flex;
+      flex-direction:column;
 
     }
-    .reiniciar{}
+header{
+  width:1000px;
+  height:50px;
+  box-shadow:0 2px 7px rgba(0, 0, 0, 0.2);
 
-    .inicio{}
-    
-    .config{}
+}
+.logo{
+  position:relative;
+  top:10px;
+  filter: invert(16%) sepia(86%) saturate(1450%) hue-rotate(84deg) brightness(150%) contrast(107%)
+}
+h1{
+  width:400px;
+  margin-left:350px;
+  padding-top:40px;
+  font-size: 30px ;
+  font-weight: 540;
+    }
+p{
+  color: #626262;
+  margin-left:270px;
+  margin-top:-10px;
+  width: 600px;
+  font-size: 25px ;
+  font-weight: 540;
+
+    }
+.Puntaje{
+  margin-left:420px;
+  width:150px;
+  height:100px;
+  border:1px solid #626262;
+  border-radius:10px;
+  text-align:center;
+    }
+.reiniciar{
+  background-color:#0d851d;
+  color:#ffff;
+  width:300px;
+  height:50px;
+  font-size:20px;
+  border-style:none;
+  border-radius:5px;
+  box-shadow:0 2px 7px rgba(0, 0, 0, 0.2);
+  margin-left:200px;
+  margin-top:100px;
+    }
+
+.inicio{
+  background-color:#ffff;
+  width:300px;
+  height:50px;
+  font-size:20px;
+  border-radius:5px;
+  margin-left:550px;
+  margin-top:-50px;
+    }
+  
+.scoreboard {
+  width: 700px;
+  border: 1px solid #8f8e8e;
+  border-radius: 10px;
+  padding: 10px 20px;
+  position:relative;
+  left:150px;
+  top:20px;
+}
+
+.scoreboard-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #8f8e8e;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.fila.destacada {
+  background-color: #e8f7ea;
+  border-left: 4px solid #0d851d;
+  padding-left: 10px;
+  border-radius: 4px;
+}
+
+.fila .pos {
+  width: 30px;
+  color: #8f8e8e;
+  font-weight: bold;
+  text-align: center;
+}
+
+.fila .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #cdeccf;
+  color: #0d851d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.fila .nombre {
+  flex: 1;
+  font-weight: 600;
+  color: #333;
+}
+
+.fila .puntos {
+  font-weight: bold;
+  color: #0d851d;
+}
+.ajustes{
+  width:20px;
+  height:20px;
+  position:relative;
+  left:940px;
+  top:15px;
+  border-radius:10px;
+}
+
