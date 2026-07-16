@@ -114,6 +114,7 @@ header{
     height:50px;
     position:relative;
     right:170px;
+    cursor:pointer;
     border-radius:10px;
     border-style:none;
     box-shadow:0 2px 7px rgba(0, 0, 0, 0.2);
@@ -126,6 +127,7 @@ header{
     position:relative;
     left:170px;
     bottom:50px;
+    cursor:pointer;
     border-radius:10px;
     border-style:none;
     box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
@@ -140,7 +142,7 @@ header{
     box-shadow:0 2px 7px rgba(0, 0, 0, 0.2);
     border-radius:10px;
     margin-top:-35px;
-    
+    cursor:pointer;
 }
 hr {
   border: none;
