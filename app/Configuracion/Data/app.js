@@ -73,5 +73,5 @@ btnCerrar.addEventListener("click", ()=>{
 const btnSalir = document.getElementById("salir");
 
 btnSalir.addEventListener("click", ()=>{
-
+  window.history.back();
 })

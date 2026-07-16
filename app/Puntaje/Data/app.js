@@ -8,7 +8,7 @@ const btnInicio = document.getElementById("inicio");
 
 const url = `https://quiz-api.cesar-kastli.workers.dev/games/${gameId}/scores`
 
-const scoreboard = document.getElementById("scoreboard");
+const scoreboard = document.getElementById("scoreboard-body");
 
 function lanzarConfeti() {
     const duracion = 3000;
@@ -21,7 +21,6 @@ function lanzarConfeti() {
             spread: 200,
             origin: { y: 0 }
         });
-
         if (Date.now() < fin) {
             requestAnimationFrame(frame);
         }
@@ -110,6 +109,5 @@ btnJugarOtra.addEventListener("click", ()=>{
 
 const btnAjustes = document.getElementById("ajustes")
 btnAjustes.addEventListener("click", () =>{
-    localStorage.setItem()
-    window.location.hrerf = "../Configuracion/ajustes.html"
+    window.location.href = "../Configuracion/ajustes.html"
 })
