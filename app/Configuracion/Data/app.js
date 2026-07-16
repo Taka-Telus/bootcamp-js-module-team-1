@@ -69,3 +69,9 @@ btnCerrar.addEventListener("click", ()=>{
     localStorage.removeItem("nombre");
     window.location.href = "../Login/Login.html";
 })
+
+const btnSalir = document.getElementById("salir");
+
+btnSalir.addEventListener("click", ()=>{
+
+})
