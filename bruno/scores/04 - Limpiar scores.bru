@@ -1,0 +1,19 @@
+meta {
+  name: Limpiar scores
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/games/{{gameId}}/scores
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  gameId: g1
+}
+
+assert {
+  res.status: eq 204
+}

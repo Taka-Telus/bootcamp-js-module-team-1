@@ -21,6 +21,10 @@ body:json {
   }
 }
 
+vars:pre-request {
+  gameId: g1
+}
+
 assert {
   res.status: eq 201
 }

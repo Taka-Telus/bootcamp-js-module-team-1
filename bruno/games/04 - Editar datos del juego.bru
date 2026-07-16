@@ -17,11 +17,13 @@ headers {
 body:json {
   {
     "title": "Prueba Bruno (editado)",
-    "image": "https://picsum.photos/seed/quiz-editado/400/300"
+    "image": "https://picsum.photos/seed/quiz-editado/400/300",
+    "difficulty": "Difícil"
   }
 }
 
 assert {
   res.status: eq 200
   res.body.title: eq Prueba Bruno (editado)
+  res.body.difficulty: eq Difícil
 }

@@ -107,3 +107,9 @@ btnInicio.addEventListener("click", ()=>{
 btnJugarOtra.addEventListener("click", ()=>{
     window.location.href ="../Preguntas/preguntasJuego.html"
 });
+
+const btnAjustes = document.getElementById("ajustes")
+btnAjustes.addEventListener("click", () =>{
+    localStorage.setItem()
+    window.location.hrerf = "../Configuracion/ajustes.html"
+})
