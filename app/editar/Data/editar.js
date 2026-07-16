@@ -59,9 +59,28 @@ async function cargarPreguntas() {
     }
 }
 
-function eliminarPregunta(index) {
+async function eliminarPregunta(index) {
     preguntas_editadas.splice(index, 1);
     renderizarPreguntas();
+    const juegoElegido = localStorage.getItem("pregunta");
+    const questionsLimpias = preguntas_editadas.map((pregunta) => ({ 
+            id: pregunta.id, 
+            text: pregunta.text, 
+            options: pregunta.options
+        })); 
+        
+        const payload = { questions: questionsLimpias }; 
+
+        renderizarPreguntas(); 
+
+
+        const respuesta = await fetch(juegoElegido, { 
+            method: "PATCH", 
+            headers: { "Content-Type": "application/json" }, 
+            body: JSON.stringify(payload) 
+        }); 
+
+    
 }
 
 function editarInformacionBasica() {

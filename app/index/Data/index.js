@@ -56,12 +56,13 @@ fichaDeJuegos.addEventListener("click", async (event) => {
             const idJuego = event.target.dataset.id;
             const urlPreguntas = `${url}/${idJuego}`;
             localStorage.setItem("pregunta", urlPreguntas);
+
             
             const respuesta = await fetch(urlPreguntas);
             if (!respuesta.ok) throw new Error("Error al obtener las preguntas");
             const preguntas = await respuesta.json();
             
-            if (preguntas.questions && preguntas.questions.length > 0) {
+            if (preguntas.questions && preguntas.questions.length >= 0) {
                 window.location.href = "../editar/editar.html";
             }
         }
