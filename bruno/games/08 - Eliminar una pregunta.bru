@@ -1,0 +1,33 @@
+meta {
+  name: Eliminar una pregunta
+  type: http
+  seq: 8
+}
+
+patch {
+  url: {{baseUrl}}/games/{{gameId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "questions": [
+      {
+        "id": "{{questionId2}}",
+        "text": "¿En qué países se juega el Mundial 2026?",
+        "options": ["Estados Unidos, Canadá y México", "Qatar", "Rusia", "Brasil"]
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.questions: length 1
+  res.body.questions[0].id: eq {{questionId2}}
+}

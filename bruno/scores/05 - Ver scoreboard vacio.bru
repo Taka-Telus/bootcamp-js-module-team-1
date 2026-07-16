@@ -1,0 +1,17 @@
+meta {
+  name: Ver scoreboard vacio
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/games/{{gameId}}/scores
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+  res.body.length: eq 0
+}
