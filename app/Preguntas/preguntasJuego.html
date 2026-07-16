@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas</title>
+    <link rel="stylesheet" href="preguntas.css">
+</head>
+<body>
+    
+    
+    <div class="contenedor-de-preguntas-y-opciones">
+        <h1 class="preguntaPrincipal" id="pregunta"> Hola</h1>
+    
+        <ul class ="listaDeOpciones" id="opcionesDePregunta"></ul>
+
+        <button id="siguiente-pregunta" >Siguiente Pregunta</button>
+
+    </div>
+    
+        
+<script>
+    const preguntaPrincipal=document.getElementById("pregunta")
+    const opcionesDePregunta=document.getElementById("opcionesDePregunta")
+    const urlJuegoElegido=localStorage.getItem("pregunta")
+    const avanzarPregunta=document.getElementById("siguiente-pregunta")
+    let preguntas_lista = [];
+    let preguntaActual=0;
+    let opciones =[`A`,`B`,`C`,`D`];
+    let puntaje = 0;
+
+
+
+
+    function mostrarPregunta() {
+        if(preguntaActual < preguntas_lista.length  ){
+            const pregunta = preguntas_lista[preguntaActual];
+            avanzarPregunta.dis
+            console.log(avanzarPregunta.setAttribute("disabled",true))
+            
+            preguntaPrincipal.textContent = pregunta.text;
+            
+            opcionesDePregunta.innerHTML = "";
+            
+            pregunta.options.forEach((opcion,index ) => {
+                
+                const li = document.createElement("li");
+
+                li.innerHTML=`
+                <button class="botonOpcion" data-id="${index}">${opcion} </button>
+                `
+                opcionesDePregunta.appendChild(li);
+        });
+        preguntaActual++
+    }
+        else{
+            preguntaPrincipal.textContent = "Fin de preguntas";
+            opcionesDePregunta.innerHTML = "";
+            avanzarPregunta.textContent="Ver puntaje"
+            window.location.href="../Puntaje/Scoreboard.html"
+            preguntaActual = 0
+
+            localStorage.setItem("puntajeFinal", puntaje);
+            puntaje = 0 ;
+        }
+    }
+    
+    async function cargarCuestionario() {
+            const respuesta = await fetch(urlJuegoElegido);
+            const datos = await respuesta.json();
+            preguntas_lista = datos.questions;
+            mostrarPregunta();
+    }
+    
+    
+    avanzarPregunta.addEventListener("click",async () =>{
+        mostrarPregunta();
+    })
+    
+    
+    
+    opcionesDePregunta.addEventListener("click",(event)=>{
+        
+        if (!event.target.classList.contains("botonOpcion")) return;
+        
+
+        
+        if (event.target.dataset.id ==0) {
+            
+        console.log("BIEN HECHO");
+            puntaje++;
+            console.log(puntaje)
+        event.target.classList.add("opcion-correcta");
+        const elementosInternos = document.querySelectorAll('button.botonOpcion');
+        elementosInternos.forEach(boton => boton.disabled = true);
+                    avanzarPregunta.disabled = false; 
+
+
+
+        }else{
+            console.log("MAL");
+            puntaje--
+            console.log(puntaje)
+            event.target.classList.add("opcion-incorrecta")
+            const correcta = opcionesDePregunta.querySelector('[data-id="0"]');
+            if (correcta) {
+                correcta.classList.add("opcion-correcta");
+                const elementosInternos = document.querySelectorAll('button.botonOpcion');
+                elementosInternos.forEach(boton => boton.disabled = true);
+                            avanzarPregunta.disabled = false; 
+
+
+
+                
+            }
+
+        }
+    })
+
+
+
+
+cargarCuestionario();
+
+</script>
+</body>
+</html>
