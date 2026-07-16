@@ -1,0 +1,26 @@
+meta {
+  name: Enviar puntaje (jugador 2)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/games/{{gameId}}/scores
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "playerName": "Ana",
+    "score": 10
+  }
+}
+
+assert {
+  res.status: eq 201
+}
