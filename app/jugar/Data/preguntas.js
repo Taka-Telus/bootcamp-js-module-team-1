@@ -77,7 +77,7 @@ async function cargarCuestionario() {
 avanzarPregunta.addEventListener("click", async () => {
     try {
         if (finDelCuestionario) {
-            window.location.href = "../index/index.html";
+            window.location.href = "../Puntaje/Scoreboard.html";
             return;
         }
         mostrarPregunta();

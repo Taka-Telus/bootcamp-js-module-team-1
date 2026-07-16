@@ -42,6 +42,7 @@ fichaDeJuegos.addEventListener("click", async (event) => {
         if (event.target.classList.contains("botonJugar")) {
             const idJuego = event.target.dataset.id;
             const urlPreguntas = `${url}/${idJuego}`;
+            localStorage.setItem("idJuego",idJuego)
             localStorage.setItem("pregunta", urlPreguntas);
             window.location.href = "../jugar/jugar.html";
         }
@@ -56,6 +57,7 @@ fichaDeJuegos.addEventListener("click", async (event) => {
             const idJuego = event.target.dataset.id;
             const urlPreguntas = `${url}/${idJuego}`;
             localStorage.setItem("pregunta", urlPreguntas);
+            localStorage.setItem("idJuego",idJuego)
 
             
             const respuesta = await fetch(urlPreguntas);

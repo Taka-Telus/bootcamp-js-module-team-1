@@ -1,7 +1,25 @@
-
+const gameId=localStorage.getItem(idJuego)
 const url = `https://quiz-api.cesar-kastli.workers.dev/games/${gameId}/scores`
 
 const scoreboard = document.getElementById("scoreboard");
+const botonVolverAlInicio=document.getElementById("inicio")
+const botonVolverAJugar=document.getElementById("reiniciar")
+
+
+botonVolverAlInicio.addEventListener("click", async ()=>{
+    window.location.href = "../index/index.html";
+    console.log("hola")
+
+
+})
+botonVolverAJugar.addEventListener("click", async ()=>{
+    window.location.href = "../index/index.html";
+        console.log("hola")
+
+
+})
+
+
 
 async function mostrarScoreboard(){
     try{
@@ -27,4 +45,8 @@ async function mostrarScoreboard(){
         console.log(error);
     }
 }
+
+
+
+
 mostrarScoreboard();
