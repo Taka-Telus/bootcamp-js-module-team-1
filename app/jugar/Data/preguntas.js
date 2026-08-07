@@ -132,4 +132,27 @@ class Partida {
         this.puntaje = 0;
         this._bindEventos();
     }
+    static mezclar(preguntas){
+        return [...preguntas].sort(()=> Math.random()- 0.5);
+    }
+    async cargarCuestionario(){
+        try{
+            if (!this.prguntaElegida){
+                throw new Error("No hay cuestionario seleccionado");
+            }
+            const respuesta = await fetch(this.preguntaElegida);
+            
+            if (!respuesta.ok){
+                throw new Error(`Error del servidor: ${respuesta.status}`);
+            }
+           const datos = await respuesta.json(); 
+           if (!datos.questions || datos.questions.length === 0){
+            throw new Error("El cuestionario no tiene preguntas");
+           }
+           this.preguntas_lista = Partida.mezclar(datos.questions);
+           this.mostrarPregunta();
+        } catch(error){
+            console.error("Error al cargar el cuestionario:", error);
+        }
+    }
 }
