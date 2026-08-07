@@ -1,0 +1,16 @@
+meta {
+  name: Juego inexistente
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/games/no-existe
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 404
+  res.body.error: isDefined
+}
