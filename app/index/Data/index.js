@@ -4,6 +4,7 @@ const boton = document.getElementById("cargarListaDeJuegos");
 const url = `https://quiz-api.cesar-kastli.workers.dev/games`;
 const botonJugar = document.getElementById("botonJugar");
 const botonCrear = document.getElementById("botonCrear");
+const botonSettings = document.getElementById("settings")
 
 async function jugar() {
     try {
@@ -76,6 +77,15 @@ fichaDeJuegos.addEventListener("click", async (event) => {
 botonCrear.addEventListener("click", async (event) => {
     try {
         window.location.href = "../creacionDeJuegos/creacionDeJuegos.html";
+    } catch (error) {
+        console.error("Error en la redirección de creación:", error);
+        
+    }
+});
+
+botonSettings.addEventListener("click", async (event) => {
+    try {
+        window.location.href = "../Configuracion/ajustes.html";
     } catch (error) {
         console.error("Error en la redirección de creación:", error);
         

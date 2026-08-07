@@ -1,5 +1,8 @@
 const gameId = localStorage.getItem("idJuego");
 const puntajeFinal = localStorage.getItem("puntajeFinal");
+
+const puntaje = document.getElementById("puntaje")
+
 const user = localStorage.getItem("nombre")
 const btnJugarOtra = document.getElementById("reiniciar");
 const btnInicio = document.getElementById("inicio");
@@ -39,7 +42,7 @@ async function enviarPuntaje(){
                 score: Number(puntajeFinal)
             })
         });
-       
+
 if (!respuesta.ok) {
     throw new Error("Error para obtener el dato");
     }
@@ -47,25 +50,30 @@ if (!respuesta.ok) {
 
     } catch(error){
         console.log(error);
-         }
+        }
     }
- 
+
 async function mostrarScoreboard() {
     try {
         const respuesta = await fetch(url);
+        
         if (!respuesta.ok) {
             throw new Error("Error para obtener el dato");
         }
+        
         const datos = await respuesta.json();
+        puntaje.textContent=`Tu puntaje es ${puntajeFinal}`
+        
+        
         const jugadores = {};
+        
         datos.forEach(jugador => {
-            if (
-                !jugadores[jugador.playerName] ||
-                jugador.score > jugadores[jugador.playerName].score
-            ) {
+            if ( !jugadores[jugador.playerName] || jugador.score > jugadores[jugador.playerName].score) 
+                {
                 jugadores[jugador.playerName] = jugador;
             }
         });
+        console.log("jugadores",jugadores)
 
         const lista = Object.values(jugadores);
         lista.sort((a, b) => b.score - a.score);
@@ -80,6 +88,8 @@ async function mostrarScoreboard() {
                 </div>
             `;
         });
+                console.log("lista",lista)
+
 
     } catch (error) {
         console.log(error);
@@ -100,11 +110,11 @@ iniciar();
 
 
 btnInicio.addEventListener("click", ()=>{
-    window.location.href ="../PantallaPrin/Selecciondejuego.html"
+    window.location.href ="../index/index.html"
 });
 
 btnJugarOtra.addEventListener("click", ()=>{
-    window.location.href ="../Preguntas/preguntasJuego.html"
+    window.location.href ="../jugar/jugar.html"
 });
 
 const btnAjustes = document.getElementById("ajustes")

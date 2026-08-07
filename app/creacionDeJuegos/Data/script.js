@@ -117,6 +117,8 @@ async function confirmarEdicionDeInformacionBasica() {
             throw new Error("el titulo es obligatorio");
         }
 
+        
+
         datosJuego.title = titulo;
         datosJuego.difficulty = dificultad;
         datosJuego.image = imagen;
@@ -197,7 +199,6 @@ function renderizarPreguntas() {
         }
         <hr>
     `;
-
     preguntas_editadas.forEach((pregunta, index) => {
         const preguntaDiv = document.createElement("div");
         preguntaDiv.classList.add("pregunta");

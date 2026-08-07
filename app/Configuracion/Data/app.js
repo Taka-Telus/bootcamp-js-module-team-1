@@ -62,7 +62,7 @@ const btnVolver = document.getElementById("volver");
 const btnCerrar = document.getElementById("cerrar");
 
 btnVolver.addEventListener("click", ()=>{
-    window.location.href("../PantallaPrin/Selecciondejuego.html");
+    window.location.href = "../index/index.html";
 });
 
 btnCerrar.addEventListener("click", ()=>{
