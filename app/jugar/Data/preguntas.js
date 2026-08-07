@@ -118,3 +118,18 @@ avanzarPregunta.addEventListener("click", async () => {
 })
 
 cargarCuestionario();
+*/
+class Partida {
+    constructor(){
+        this.preguntaPrincipal = preguntaPrincipal;
+        this.opcionesDePregunta = opcionesDePregunta;
+        this.preguntaElegida = preguntaElegida;
+        this.avanzarPregunta = avanzarPregunta;
+
+        this.preguntas_lista = [];
+        this.preguntaActual = 0;
+        this.finDelCuestionario = false;
+        this.puntaje = 0;
+        this._bindEventos();
+    }
+}
